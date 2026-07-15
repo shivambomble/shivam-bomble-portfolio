@@ -6,6 +6,30 @@ export default function Experience() {
       <div className="orb orb-1" style={{ width: "400px", height: "400px", background: "#ea580c", top: "60%", left: "-5%" }}></div>
 
       <div className="section-container">
+        <div className="side-decor side-decor-left">
+          <span className="decor-symbol">[ ]</span>
+          <span className="decor-symbol">()</span>
+          <span className="decor-symbol">{`=>`}</span>
+          <span className="decor-symbol">!!</span>
+          <span className="decor-symbol">??</span>
+          <span className="decor-symbol">{`?.()`}</span>
+          <div className="decor-line decor-line-left"></div>
+          <span className="decor-symbol">{`=>`}</span>
+          <span className="decor-symbol">/&gt;</span>
+          <span className="decor-symbol">#!</span>
+        </div>
+        <div className="side-decor side-decor-right">
+          <span className="decor-symbol decor-symbol-right">▲</span>
+          <span className="decor-symbol decor-symbol-right">◆</span>
+          <span className="decor-symbol decor-symbol-right">⬡</span>
+          <span className="decor-symbol decor-symbol-right">◎</span>
+          <span className="decor-symbol decor-symbol-right">◇</span>
+          <span className="decor-symbol decor-symbol-right">△</span>
+          <div className="decor-line decor-line-right"></div>
+          <span className="decor-symbol decor-symbol-right">○</span>
+          <span className="decor-symbol decor-symbol-right">□</span>
+          <span className="decor-symbol decor-symbol-right">☆</span>
+        </div>
         <h2 className="section-title">
           <span className="highlight">Work Experience</span>
         </h2>

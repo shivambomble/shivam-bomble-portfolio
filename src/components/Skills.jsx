@@ -86,6 +86,30 @@ export default function Skills() {
       <div className="orb orb-2" style={{ width: "350px", height: "350px", background: "#d97706", top: "30%", right: "-5%" }}></div>
 
       <div className="section-container">
+        <div className="side-decor side-decor-left">
+          <span className="decor-symbol">...</span>
+          <span className="decor-symbol">[...]</span>
+          <span className="decor-symbol">{`|>`}</span>
+          <span className="decor-symbol">{`=>`}</span>
+          <span className="decor-symbol">::</span>
+          <span className="decor-symbol">{`->`}</span>
+          <div className="decor-line decor-line-left"></div>
+          <span className="decor-symbol">{`$.()`}</span>
+          <span className="decor-symbol">@</span>
+          <span className="decor-symbol">%%</span>
+        </div>
+        <div className="side-decor side-decor-right">
+          <span className="decor-symbol decor-symbol-right">⎔</span>
+          <span className="decor-symbol decor-symbol-right">◆</span>
+          <span className="decor-symbol decor-symbol-right">⌘</span>
+          <span className="decor-symbol decor-symbol-right">⚙</span>
+          <span className="decor-symbol decor-symbol-right">⌨</span>
+          <span className="decor-symbol decor-symbol-right">◇</span>
+          <div className="decor-line decor-line-right"></div>
+          <span className="decor-symbol decor-symbol-right">⊞</span>
+          <span className="decor-symbol decor-symbol-right">•</span>
+          <span className="decor-symbol decor-symbol-right">✦</span>
+        </div>
         <h2 className="section-title">
           <span className="highlight">Skills</span>
         </h2>

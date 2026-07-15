@@ -6,6 +6,30 @@ export default function Education() {
       <div className="orb orb-3" style={{ width: "350px", height: "350px", background: "#92400e" }}></div>
 
       <div className="section-container">
+        <div className="side-decor side-decor-left">
+          <span className="decor-symbol">&lt;/&gt;</span>
+          <span className="decor-symbol">{ }</span>
+          <span className="decor-symbol">#</span>
+          <span className="decor-symbol">!=</span>
+          <span className="decor-symbol">=&gt;</span>
+          <span className="decor-symbol">:=</span>
+          <div className="decor-line decor-line-left"></div>
+          <span className="decor-symbol">**</span>
+          <span className="decor-symbol">/*</span>
+          <span className="decor-symbol">++</span>
+        </div>
+        <div className="side-decor side-decor-right">
+          <span className="decor-symbol decor-symbol-right">∑</span>
+          <span className="decor-symbol decor-symbol-right">π</span>
+          <span className="decor-symbol decor-symbol-right">Δ</span>
+          <span className="decor-symbol decor-symbol-right">∞</span>
+          <span className="decor-symbol decor-symbol-right">θ</span>
+          <span className="decor-symbol decor-symbol-right">λ</span>
+          <div className="decor-line decor-line-right"></div>
+          <span className="decor-symbol decor-symbol-right">√</span>
+          <span className="decor-symbol decor-symbol-right">∫</span>
+          <span className="decor-symbol decor-symbol-right">≈</span>
+        </div>
         <h2 className="section-title">
           <span className="highlight">Education</span>
         </h2>
