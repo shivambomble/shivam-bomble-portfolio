@@ -1,10 +1,72 @@
+import { useState, useEffect } from "react";
 import { personalInfo } from "../data/portfolioData";
 
+const FULL_TAGLINE = personalInfo.tagline;
+
 export default function Hero() {
+  const [displayedText, setDisplayedText] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
+  const [typingDone, setTypingDone] = useState(false);
+
+  // Typewriter effect
+  useEffect(() => {
+    if (displayedText.length < FULL_TAGLINE.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(FULL_TAGLINE.slice(0, displayedText.length + 1));
+      }, 40 + Math.random() * 30);
+      return () => clearTimeout(timeout);
+    } else {
+      setTypingDone(true);
+    }
+  }, [displayedText]);
+
+  // Blinking cursor
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowCursor((prev) => !prev);
+    }, 530);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Magnetic button effect
+  useEffect(() => {
+    const buttons = document.querySelectorAll(".magnetic-btn");
+    const handleMouseMove = (e) => {
+      const btn = e.currentTarget;
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      const strength = parseFloat(btn.dataset.strength) || 10;
+      btn.style.transform = `translate(${x / strength}px, ${y / strength}px)`;
+    };
+    const handleMouseLeave = (e) => {
+      e.currentTarget.style.transform = "translate(0, 0)";
+    };
+    buttons.forEach((btn) => {
+      btn.addEventListener("mousemove", handleMouseMove);
+      btn.addEventListener("mouseleave", handleMouseLeave);
+    });
+    return () => {
+      buttons.forEach((btn) => {
+        btn.removeEventListener("mousemove", handleMouseMove);
+        btn.removeEventListener("mouseleave", handleMouseLeave);
+      });
+    };
+  }, []);
+
   return (
     <section id="home" className="section hero-section">
       <div className="orb orb-1"></div>
       <div className="orb orb-2"></div>
+
+      {/* Floating particles */}
+      <div className="particles">
+        {[...Array(6)].map((_, i) => (
+          <div key={i} className={`particle particle-${i + 1}`}>
+            {["{ }", "< />", "()", "=>", "/* */", "..."][i]}
+          </div>
+        ))}
+      </div>
 
       <div className="section-container hero-container">
         <div className="hero-content">
@@ -18,8 +80,11 @@ export default function Hero() {
             <span className="gradient-text">{personalInfo.name}</span>
           </h1>
 
-          <p className="hero-subtitle animate-in animate-in-delay-1">
-            {personalInfo.tagline}
+          <p className="hero-subtitle animate-in animate-in-delay-1 typewriter-line">
+            <span className="typewriter-text">{displayedText}</span>
+            <span className={`typewriter-cursor ${typingDone ? "blink-slow" : ""}`} style={{ opacity: showCursor ? 1 : 0 }}>
+              |
+            </span>
           </p>
 
           <p className="hero-description animate-in animate-in-delay-2">
@@ -27,14 +92,14 @@ export default function Hero() {
           </p>
 
           <div className="hero-actions animate-in animate-in-delay-3">
-            <a href="#projects" className="btn btn-primary">
+            <a href="#projects" className="btn btn-primary magnetic-btn" data-strength="15">
               View My Work
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
             </a>
-            <a href="#contact" className="btn btn-secondary">
+            <a href="#contact" className="btn btn-secondary magnetic-btn" data-strength="10">
               Get In Touch
             </a>
           </div>
@@ -50,12 +115,11 @@ export default function Hero() {
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
               </svg>
             </a>
-
           </div>
         </div>
 
         <div className="hero-visual animate-in animate-in-delay-2">
-          <div className="hero-code-block">
+          <div className="hero-code-block floating-code-block">
             <div className="code-line"><span className="code-keyword">import</span> <span className="code-string">"future"</span></div>
             <div className="code-line"><span className="code-keyword">const</span> <span className="code-variable">builder</span> = <span className="code-keyword">new</span> <span className="code-function">Developer</span>()</div>
             <div className="code-line"><span className="code-variable">builder</span>.<span className="code-function">learn</span>(<span className="code-string">"AI"</span>)</div>
@@ -135,6 +199,23 @@ export default function Hero() {
           font-size: clamp(1.1rem, 2vw, 1.4rem);
           color: rgba(255, 255, 255, 0.6);
           font-weight: 400;
+          min-height: 1.6em;
+        }
+
+        .typewriter-cursor {
+          font-weight: 100;
+          color: #d97706;
+          margin-left: 2px;
+          transition: opacity 0.1s;
+        }
+
+        .typewriter-cursor.blink-slow {
+          animation: cursorBlink 1s ease-in-out infinite;
+        }
+
+        @keyframes cursorBlink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
         }
 
         .hero-description {
@@ -183,7 +264,7 @@ export default function Hero() {
           align-items: center;
         }
 
-        .hero-code-block {
+        .floating-code-block {
           background: rgba(255, 255, 255, 0.03);
           border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 16px;
@@ -194,6 +275,12 @@ export default function Hero() {
           min-width: 320px;
           backdrop-filter: blur(10px);
           box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          animation: floatCode 6s ease-in-out infinite;
+        }
+
+        @keyframes floatCode {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-12px); }
         }
 
         .code-line {
@@ -235,6 +322,45 @@ export default function Hero() {
           50% { transform: translateY(8px); }
         }
 
+        /* Floating particles */
+        .particles {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .particle {
+          position: absolute;
+          font-family: "JetBrains Mono", "Fira Code", monospace;
+          font-size: 0.85rem;
+          color: rgba(217, 119, 6, 0.12);
+          animation: particleFloat 20s linear infinite;
+          white-space: nowrap;
+          user-select: none;
+        }
+
+        .particle-1 { top: 15%; left: 5%; animation-duration: 25s; animation-delay: 0s; font-size: 1.2rem; }
+        .particle-2 { top: 40%; left: 85%; animation-duration: 20s; animation-delay: -5s; font-size: 1rem; }
+        .particle-3 { top: 70%; left: 10%; animation-duration: 30s; animation-delay: -10s; font-size: 1.4rem; }
+        .particle-4 { top: 25%; left: 75%; animation-duration: 22s; animation-delay: -3s; font-size: 0.9rem; }
+        .particle-5 { top: 80%; left: 80%; animation-duration: 28s; animation-delay: -8s; font-size: 1.1rem; }
+        .particle-6 { top: 55%; left: 50%; animation-duration: 18s; animation-delay: -15s; font-size: 1.3rem; }
+
+        @keyframes particleFloat {
+          0% { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0; }
+          10% { opacity: 0.15; }
+          90% { opacity: 0.15; }
+          100% { transform: translateY(-100vh) rotate(720deg) scale(1); opacity: 0; }
+        }
+
+        /* Magnetic button */
+        .magnetic-btn {
+          transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+          will-change: transform;
+        }
+
         @media (max-width: 968px) {
           .hero-container {
             grid-template-columns: 1fr;
@@ -258,11 +384,15 @@ export default function Hero() {
             margin: 0 auto;
           }
 
-          .hero-code-block {
+          .floating-code-block {
             min-width: unset;
             width: 100%;
             font-size: 0.8rem;
             padding: 24px;
+          }
+
+          .particle {
+            display: none;
           }
         }
       `}</style>

@@ -41,6 +41,47 @@ export default function Experience() {
       </div>
 
       <style>{`
+        .exp-dot {
+          animation: dotPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes dotPulse {
+          0%, 100% { box-shadow: 0 0 20px rgba(217, 119, 6, 0.3); }
+          50% { box-shadow: 0 0 35px rgba(217, 119, 6, 0.6), 0 0 60px rgba(217, 119, 6, 0.15); }
+        }
+
+        .exp-connector {
+          animation: connectorGrow 1s ease forwards;
+          transform-origin: top;
+          transform: scaleY(0);
+        }
+
+        .exp-item.animate-in .exp-connector {
+          animation: connectorGrow 0.8s ease forwards 0.3s;
+        }
+
+        @keyframes connectorGrow {
+          from { transform: scaleY(0); }
+          to { transform: scaleY(1); }
+        }
+
+        .exp-card {
+          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .exp-card:hover {
+          transform: translateY(-6px) scale(1.012) !important;
+        }
+
+        .exp-achievements li {
+          transition: all 0.3s ease;
+        }
+
+        .exp-achievements li:hover {
+          color: rgba(255, 255, 255, 0.8);
+          padding-left: 24px;
+        }
+
         .exp-timeline {
           max-width: 800px;
           margin: 0 auto;

@@ -121,6 +121,22 @@ export default function Contact() {
       </div>
 
       <style>{`
+        .form-input {
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .form-input:focus {
+          transform: scale(1.01);
+        }
+
+        .contact-social-link {
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .contact-social-link:hover {
+          transform: translateY(-3px) scale(1.04) !important;
+        }
+
         .contact-content {
           display: grid;
           grid-template-columns: 1fr 1fr;

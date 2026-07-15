@@ -58,6 +58,25 @@ export default function Education() {
       </div>
 
       <style>{`
+        .education-card {
+          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .education-card:hover {
+          transform: translateY(-8px) scale(1.015) !important;
+          border-color: rgba(217, 119, 6, 0.2) !important;
+          box-shadow: 0 20px 60px rgba(217, 119, 6, 0.08), 0 0 40px rgba(217, 119, 6, 0.03) !important;
+        }
+
+        .education-card:hover .edu-icon svg {
+          animation: iconBounce 0.5s ease;
+        }
+
+        @keyframes iconBounce {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.2) rotate(-5deg); }
+        }
+
         .education-timeline {
           display: flex;
           flex-direction: column;

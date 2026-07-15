@@ -254,6 +254,23 @@ export default function Projects() {
       </div>
 
       <style>{`
+        .project-card {
+          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .project-card:hover {
+          transform: translateY(-8px) scale(1.015) !important;
+        }
+
+        .project-card:hover .project-icon {
+          animation: iconBounce 0.5s ease;
+        }
+
+        @keyframes iconBounce {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.15) rotate(-5deg); }
+        }
+
         .github-profile-link {
           display: flex;
           align-items: center;

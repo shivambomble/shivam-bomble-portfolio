@@ -130,6 +130,55 @@ export default function Skills() {
       </div>
 
       <style>{`
+        .skill-category {
+          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .skill-category:hover {
+          transform: translateY(-4px) scale(1.008) !important;
+          box-shadow: 0 12px 40px rgba(217, 119, 6, 0.08) !important;
+        }
+
+        .filter-btn {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .filter-btn::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 0;
+          height: 2px;
+          background: linear-gradient(90deg, #d97706, #ea580c);
+          transition: all 0.3s ease;
+          transform: translateX(-50%);
+        }
+
+        .filter-btn.active::after {
+          width: 60%;
+        }
+
+        .skill-tag {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .skill-tag::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+          transform: translateX(-100%);
+          transition: transform 0s;
+        }
+
+        .skill-tag:hover::before {
+          transform: translateX(100%);
+          transition: transform 0.6s ease;
+        }
+
         .skills-filter {
           display: flex;
           justify-content: center;
