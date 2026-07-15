@@ -83,7 +83,7 @@ export default function Skills() {
 
   return (
     <section id="skills" className="section">
-      <div className="orb orb-2" style={{ width: "350px", height: "350px", background: "#10b981", top: "30%", right: "-5%" }}></div>
+      <div className="orb orb-2" style={{ width: "350px", height: "350px", background: "#06b6d4", top: "30%", right: "-5%" }}></div>
 
       <div className="section-container">
         <h2 className="section-title">
@@ -152,13 +152,13 @@ export default function Skills() {
         }
 
         .filter-btn:hover {
-          border-color: rgba(16, 185, 129, 0.3);
+          border-color: rgba(6, 182, 212, 0.3);
           color: #fff;
         }
 
         .filter-btn.active {
-          background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(245, 158, 11, 0.2));
-          border-color: rgba(16, 185, 129, 0.4);
+          background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(129, 140, 248, 0.2));
+          border-color: rgba(6, 182, 212, 0.4);
           color: #fff;
         }
 
@@ -187,7 +187,7 @@ export default function Skills() {
           left: 0;
           right: 0;
           height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), rgba(245, 158, 11, 0.3), transparent);
+          background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.3), rgba(129, 140, 248, 0.3), transparent);
           opacity: 0;
           transition: opacity 0.4s ease;
         }
@@ -197,10 +197,10 @@ export default function Skills() {
         }
 
         .skill-category:hover {
-          border-color: rgba(16, 185, 129, 0.15);
+          border-color: rgba(6, 182, 212, 0.15);
           background: rgba(255, 255, 255, 0.04);
           transform: translateY(-2px);
-          box-shadow: 0 8px 32px rgba(16, 185, 129, 0.06);
+          box-shadow: 0 8px 32px rgba(6, 182, 212, 0.06);
         }
 
         .skill-category-header {
@@ -213,7 +213,7 @@ export default function Skills() {
         .skill-category-line {
           width: 3px;
           height: 18px;
-          background: linear-gradient(180deg, #10b981, #f59e0b);
+          background: linear-gradient(180deg, #06b6d4, #818cf8);
           border-radius: 2px;
           flex-shrink: 0;
         }
@@ -257,10 +257,10 @@ export default function Skills() {
 
         .skill-tag:hover {
           color: #fff;
-          background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.12));
-          border-color: rgba(16, 185, 129, 0.3);
+          background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(129, 140, 248, 0.12));
+          border-color: rgba(6, 182, 212, 0.3);
           transform: translateY(-3px) scale(1.04);
-          box-shadow: 0 6px 20px rgba(16, 185, 129, 0.15);
+          box-shadow: 0 6px 20px rgba(6, 182, 212, 0.15);
         }
 
         .skill-tag:hover .skill-icon {
@@ -271,7 +271,7 @@ export default function Skills() {
           width: 16px;
           height: 16px;
           flex-shrink: 0;
-          color: #10b981;
+          color: #06b6d4;
           transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 

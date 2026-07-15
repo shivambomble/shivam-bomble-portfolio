@@ -3,7 +3,7 @@ import { education } from "../data/portfolioData";
 export default function Education() {
   return (
     <section id="education" className="section">
-      <div className="orb orb-3" style={{ width: "350px", height: "350px", background: "#f59e0b" }}></div>
+      <div className="orb orb-3" style={{ width: "350px", height: "350px", background: "#818cf8" }}></div>
 
       <div className="section-container">
         <h2 className="section-title">
@@ -47,7 +47,7 @@ export default function Education() {
                 )}
               </div>
               <div className="edu-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
                   <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
                 </svg>
@@ -77,12 +77,12 @@ export default function Education() {
         .edu-year {
           font-size: 0.9rem;
           font-weight: 700;
-          color: #34d399;
-          background: rgba(52, 211, 153, 0.1);
+          color: #a78bfa;
+          background: rgba(167, 139, 250, 0.1);
           padding: 6px 16px;
           border-radius: 8px;
           white-space: nowrap;
-          border: 1px solid rgba(52, 211, 153, 0.2);
+          border: 1px solid rgba(167, 139, 250, 0.2);
         }
 
         .edu-degree {
@@ -124,7 +124,7 @@ export default function Education() {
 
         .edu-highlights li::before {
           content: "▹ ";
-          color: #10b981;
+          color: #06b6d4;
         }
 
         .edu-paper-link {
@@ -137,7 +137,7 @@ export default function Education() {
         }
 
         .edu-paper-link:hover {
-          color: #10b981;
+          color: #06b6d4;
           gap: 6px;
         }
 

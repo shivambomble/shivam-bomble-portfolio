@@ -3,7 +3,7 @@ import { experience } from "../data/portfolioData";
 export default function Experience() {
   return (
     <section id="experience" className="section">
-      <div className="orb orb-1" style={{ width: "400px", height: "400px", background: "#34d399", top: "60%", left: "-5%" }}></div>
+      <div className="orb orb-1" style={{ width: "400px", height: "400px", background: "#a78bfa", top: "60%", left: "-5%" }}></div>
 
       <div className="section-container">
         <h2 className="section-title">
@@ -66,9 +66,9 @@ export default function Experience() {
           width: 16px;
           height: 16px;
           border-radius: 50%;
-          background: linear-gradient(135deg, #10b981, #f59e0b);
+          background: linear-gradient(135deg, #06b6d4, #818cf8);
           border: 3px solid rgba(10, 10, 15, 1);
-          box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+          box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
           z-index: 1;
           flex-shrink: 0;
           margin-top: 8px;
@@ -77,7 +77,7 @@ export default function Experience() {
         .exp-connector {
           width: 2px;
           flex: 1;
-          background: linear-gradient(180deg, rgba(16, 185, 129, 0.4), rgba(245, 158, 11, 0.4));
+          background: linear-gradient(180deg, rgba(6, 182, 212, 0.4), rgba(129, 140, 248, 0.4));
           min-height: 40px;
         }
 
@@ -109,12 +109,12 @@ export default function Experience() {
 
         .exp-period {
           font-size: 0.85rem;
-          color: #34d399;
-          background: rgba(52, 211, 153, 0.1);
+          color: #a78bfa;
+          background: rgba(167, 139, 250, 0.1);
           padding: 4px 12px;
           border-radius: 8px;
           white-space: nowrap;
-          border: 1px solid rgba(52, 211, 153, 0.2);
+          border: 1px solid rgba(167, 139, 250, 0.2);
         }
 
         .exp-description {
@@ -143,7 +143,7 @@ export default function Experience() {
           content: "→";
           position: absolute;
           left: 0;
-          color: #f59e0b;
+          color: #818cf8;
         }
 
         @media (max-width: 768px) {

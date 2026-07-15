@@ -104,8 +104,8 @@ export default function Hero() {
           gap: 8px;
           padding: 6px 16px;
           border-radius: 50px;
-          background: rgba(16, 185, 129, 0.1);
-          border: 1px solid rgba(16, 185, 129, 0.2);
+          background: rgba(6, 182, 212, 0.1);
+          border: 1px solid rgba(6, 182, 212, 0.2);
           font-size: 0.85rem;
           color: rgba(255, 255, 255, 0.8);
           width: fit-content;
@@ -171,9 +171,9 @@ export default function Hero() {
         }
 
         .social-icon:hover {
-          background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.15));
+          background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(129, 140, 248, 0.15));
           color: #fff;
-          border-color: rgba(16, 185, 129, 0.3);
+          border-color: rgba(6, 182, 212, 0.3);
           transform: translateY(-3px);
         }
 
