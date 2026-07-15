@@ -211,7 +211,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="section">
-      <div className="orb orb-3" style={{ width: "300px", height: "300px", background: "#06b6d4", top: "20%", left: "10%" }}></div>
+      <div className="orb orb-3" style={{ width: "300px", height: "300px", background: "#34d399", top: "20%", left: "10%" }}></div>
 
       <div className="section-container">
         <h2 className="section-title">
@@ -284,7 +284,7 @@ export default function Projects() {
           width: 40px;
           height: 40px;
           border: 3px solid rgba(255, 255, 255, 0.05);
-          border-top: 3px solid #0ea5e9;
+          border-top: 3px solid #10b981;
           border-radius: 50%;
           animation: spin 1s linear infinite;
         }
@@ -322,8 +322,8 @@ export default function Projects() {
           align-items: center;
           justify-content: center;
           border-radius: 10px;
-          background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(99, 102, 241, 0.15));
-          color: #0ea5e9;
+          background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.15));
+          color: #10b981;
           flex-shrink: 0;
         }
 
@@ -380,7 +380,7 @@ export default function Projects() {
         }
 
         .projects-note a {
-          color: #0ea5e9;
+          color: #10b981;
           text-decoration: none;
         }
 

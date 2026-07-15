@@ -151,8 +151,8 @@ export default function Navbar() {
 
         .nav-link.active {
           color: #fff;
-          background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(99, 102, 241, 0.15));
-          border: 1px solid rgba(14, 165, 233, 0.2);
+          background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.15));
+          border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
         .hamburger {
