@@ -32,8 +32,8 @@ export default function Contact() {
 
   return (
     <section id="contact" className="section">
-      <div className="orb orb-1" style={{ width: "450px", height: "450px", background: "#818cf8", top: "20%", left: "-10%" }}></div>
-      <div className="orb orb-2" style={{ width: "350px", height: "350px", background: "#06b6d4", bottom: "10%", right: "-5%" }}></div>
+      <div className="orb orb-1" style={{ width: "450px", height: "450px", background: "#92400e", top: "20%", left: "-10%" }}></div>
+      <div className="orb orb-2" style={{ width: "350px", height: "350px", background: "#d97706", bottom: "10%", right: "-5%" }}></div>
 
       <div className="section-container">
         <h2 className="section-title">
@@ -167,7 +167,7 @@ export default function Contact() {
           justify-content: center;
           border-radius: 12px;
           background: rgba(255, 255, 255, 0.05);
-          color: #06b6d4;
+          color: #d97706;
           flex-shrink: 0;
         }
 
@@ -208,7 +208,7 @@ export default function Contact() {
         .contact-social-link:hover {
           background: rgba(255, 255, 255, 0.06);
           color: #fff;
-          border-color: rgba(6, 182, 212, 0.3);
+          border-color: rgba(217, 119, 6, 0.3);
           transform: translateY(-2px);
         }
 
@@ -247,8 +247,8 @@ export default function Contact() {
         }
 
         .form-input:focus {
-          border-color: #06b6d4;
-          box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+          border-color: #d97706;
+          box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
           background: rgba(255, 255, 255, 0.06);
         }
 
