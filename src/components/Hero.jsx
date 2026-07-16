@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { personalInfo } from "../data/portfolioData";
 
 const FULL_TAGLINE = personalInfo.tagline;
@@ -28,25 +29,41 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, []);
 
-  // Magnetic button effect
+  // Magnetic button effect with smoother physics
   useEffect(() => {
     const buttons = document.querySelectorAll(".magnetic-btn");
+    let rafId = null;
+
     const handleMouseMove = (e) => {
       const btn = e.currentTarget;
       const rect = btn.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
-      const strength = parseFloat(btn.dataset.strength) || 10;
-      btn.style.transform = `translate(${x / strength}px, ${y / strength}px)`;
+      const strength = parseFloat(btn.dataset.strength) || 15;
+      btn.style.setProperty('--mx', `${x / strength}px`);
+      btn.style.setProperty('--my', `${y / strength}px`);
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          btn.style.transform = `translate(${x / strength}px, ${y / strength}px)`;
+          rafId = null;
+        });
+      }
     };
+
     const handleMouseLeave = (e) => {
-      e.currentTarget.style.transform = "translate(0, 0)";
+      const btn = e.currentTarget;
+      btn.dataset.leaving = 'true';
+      btn.style.transform = "translate(0, 0)";
+      setTimeout(() => { delete btn.dataset.leaving; }, 300);
     };
+
     buttons.forEach((btn) => {
-      btn.addEventListener("mousemove", handleMouseMove);
+      btn.addEventListener("mousemove", handleMouseMove, { passive: true });
       btn.addEventListener("mouseleave", handleMouseLeave);
     });
+
     return () => {
+      if (rafId) cancelAnimationFrame(rafId);
       buttons.forEach((btn) => {
         btn.removeEventListener("mousemove", handleMouseMove);
         btn.removeEventListener("mouseleave", handleMouseLeave);
@@ -54,89 +71,222 @@ export default function Hero() {
     };
   }, []);
 
+  // Ripple effect on buttons
+  useEffect(() => {
+    const buttons = document.querySelectorAll(".btn-primary, .btn-secondary");
+    const handleClick = (e) => {
+      const btn = e.currentTarget;
+      const rect = btn.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      btn.style.setProperty('--ripple-x', `${x}%`);
+      btn.style.setProperty('--ripple-y', `${y}%`);
+
+      const ripple = document.createElement('span');
+      ripple.style.cssText = `
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        left: ${e.clientX - rect.left - 10}px;
+        top: ${e.clientY - rect.top - 10}px;
+        transform: scale(0);
+        pointer-events: none;
+      `;
+      btn.appendChild(ripple);
+      const anim = ripple.animate([
+        { transform: 'scale(0)', opacity: 0.6 },
+        { transform: 'scale(10)', opacity: 0 }
+      ], { duration: 600, easing: 'ease-out' });
+      anim.onfinish = () => ripple.remove();
+    };
+    buttons.forEach((btn) => btn.addEventListener('click', handleClick));
+    return () => buttons.forEach((btn) => btn.removeEventListener('click', handleClick));
+  }, []);
+
+  // Framer Motion scroll-based parallax
+  const { scrollY } = useScroll();
+  const codeBlockY = useTransform(scrollY, [0, 800], [0, -100]);
+  const codeBlockOpacity = useTransform(scrollY, [0, 600], [1, 0.4]);
+  const orb1Y = useTransform(scrollY, [0, 1500], [0, -120]);
+  const orb2Y = useTransform(scrollY, [0, 1500], [0, 100]);
+
+  const heroContentVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.12,
+        duration: 0.01,
+      },
+    },
+  };
+
+  const fadeSlideUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
+  const fadeSlideUpDelayed = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
   return (
     <section id="home" className="section hero-section">
-      <div className="orb orb-1"></div>
-      <div className="orb orb-2"></div>
+      <motion.div
+        className="orb orb-1"
+        style={{ y: orb1Y }}
+      />
+      <motion.div
+        className="orb orb-2"
+        style={{ y: orb2Y }}
+      />
 
       {/* Floating particles */}
       <div className="particles">
-        {[...Array(6)].map((_, i) => (
-          <div key={i} className={`particle particle-${i + 1}`}>
-            {["{ }", "< />", "()", "=>", "/* */", "..."][i]}
-          </div>
+        {["{ }", "< />", "()", "=>", "/* */", "..."].map((symbol, i) => (
+          <motion.div
+            key={i}
+            className={`particle particle-${i + 1}`}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 0.12, y: 0 }}
+            transition={{ duration: 1, delay: 1 + i * 0.3, ease: "easeOut" }}
+          >
+            {symbol}
+          </motion.div>
         ))}
       </div>
 
       <div className="section-container hero-container">
-        <div className="hero-content">
-          <div className="hero-badge animate-in animate-in-delay-1">
+        <motion.div
+          className="hero-content"
+          variants={heroContentVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div className="hero-badge" variants={fadeSlideUp}>
             <span className="badge-dot"></span>
             Open to opportunities
-          </div>
+          </motion.div>
 
-          <h1 className="hero-title animate-in">
+          <motion.h1 className="hero-title" variants={fadeSlideUp}>
             Hi, I'm{" "}
             <span className="gradient-text">{personalInfo.name}</span>
-          </h1>
+          </motion.h1>
 
-          <p className="hero-subtitle animate-in animate-in-delay-1 typewriter-line">
+          <motion.p className="hero-subtitle typewriter-line" variants={fadeSlideUp}>
             <span className="typewriter-text">{displayedText}</span>
             <span className={`typewriter-cursor ${typingDone ? "blink-slow" : ""}`} style={{ opacity: showCursor ? 1 : 0 }}>
               |
             </span>
-          </p>
+          </motion.p>
 
-          <p className="hero-description animate-in animate-in-delay-2">
+          <motion.p className="hero-description" variants={fadeSlideUp}>
             {personalInfo.bio}
-          </p>
+          </motion.p>
 
-          <div className="hero-actions animate-in animate-in-delay-3">
-            <a href="#projects" className="btn btn-primary magnetic-btn" data-strength="15">
+          <motion.div className="hero-actions" variants={fadeSlideUp}>
+            <motion.a
+              href="#projects"
+              className="btn btn-primary magnetic-btn"
+              data-strength="15"
+              whileHover={{ scale: 1.05, y: -3 }}
+              whileTap={{ scale: 0.96 }}
+            >
               View My Work
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <motion.svg
+                width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                strokeLinecap="round" strokeLinejoin="round"
+                animate={{ x: [0, 4, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
-            <a href="#contact" className="btn btn-secondary magnetic-btn" data-strength="10">
+              </motion.svg>
+            </motion.a>
+            <motion.a
+              href="#contact"
+              className="btn btn-secondary magnetic-btn"
+              data-strength="10"
+              whileHover={{ scale: 1.05, y: -3, borderColor: "#d97706" }}
+              whileTap={{ scale: 0.96 }}
+            >
               Get In Touch
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
 
-          <div className="hero-social animate-in animate-in-delay-3">
-            <a href={personalInfo.social.github} target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="GitHub">
+          <motion.div className="hero-social" variants={fadeSlideUp}>
+            <motion.a
+              href={personalInfo.social.github}
+              target="_blank" rel="noopener noreferrer"
+              className="social-icon"
+              aria-label="GitHub"
+              whileHover={{ scale: 1.12, y: -4, backgroundColor: "rgba(217, 119, 6, 0.2)" }}
+              whileTap={{ scale: 0.92 }}
+            >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
               </svg>
-            </a>
-            <a href={personalInfo.social.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn">
+            </motion.a>
+            <motion.a
+              href={personalInfo.social.linkedin}
+              target="_blank" rel="noopener noreferrer"
+              className="social-icon"
+              aria-label="LinkedIn"
+              whileHover={{ scale: 1.12, y: -4, backgroundColor: "rgba(217, 119, 6, 0.2)" }}
+              whileTap={{ scale: 0.92 }}
+            >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
               </svg>
-            </a>
-          </div>
-        </div>
+            </motion.a>
+          </motion.div>
+        </motion.div>
 
-        <div className="hero-visual animate-in animate-in-delay-2">
-          <div className="hero-code-block floating-code-block">
+        <motion.div
+          className="hero-visual"
+          variants={fadeSlideUpDelayed}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div
+            className="hero-code-block floating-code-block"
+            style={{ y: codeBlockY, opacity: codeBlockOpacity }}
+            whileHover={{ scale: 1.02 }}
+          >
             <div className="code-line"><span className="code-keyword">import</span> <span className="code-string">"future"</span></div>
             <div className="code-line"><span className="code-keyword">const</span> <span className="code-variable">builder</span> = <span className="code-keyword">new</span> <span className="code-function">Developer</span>()</div>
             <div className="code-line"><span className="code-variable">builder</span>.<span className="code-function">learn</span>(<span className="code-string">"AI"</span>)</div>
             <div className="code-line"><span className="code-variable">builder</span>.<span className="code-function">build</span>(<span className="code-string">"cool stuff"</span>)</div>
             <div className="code-line"><span className="code-variable">builder</span>.<span className="code-function">impact</span>(<span className="code-string">"the world"</span>)</div>
             <div className="code-line code-comment">// Let's create something amazing</div>
-          </div>
-        </div>
+            <div className="code-block-glow"></div>
+          </motion.div>
+        </motion.div>
       </div>
 
-      <div className="scroll-indicator">
+      <motion.div
+        className="scroll-indicator"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      >
         <span>Scroll</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <line x1="12" y1="5" x2="12" y2="19"></line>
           <polyline points="19 12 12 19 5 12"></polyline>
         </svg>
-      </div>
+      </motion.div>
 
       <style>{`
         .hero-section {
@@ -276,6 +426,27 @@ export default function Hero() {
           backdrop-filter: blur(10px);
           box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
           animation: floatCode 6s ease-in-out infinite;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .code-block-glow {
+          position: absolute;
+          inset: 0;
+          border-radius: 16px;
+          background: linear-gradient(135deg,
+            transparent 20%,
+            rgba(217, 119, 6, 0.03) 40%,
+            rgba(234, 88, 12, 0.03) 60%,
+            transparent 80%
+          );
+          animation: glowSlide 8s ease-in-out infinite;
+          pointer-events: none;
+        }
+
+        @keyframes glowSlide {
+          0%, 100% { opacity: 0.3; transform: translateX(-10%); }
+          50% { opacity: 0.8; transform: translateX(10%); }
         }
 
         @keyframes floatCode {
@@ -315,11 +486,17 @@ export default function Hero() {
           color: rgba(255, 255, 255, 0.3);
           font-size: 0.8rem;
           animation: bounce 2s ease-in-out infinite;
+          cursor: pointer;
+          transition: color 0.3s ease;
+        }
+
+        .scroll-indicator:hover {
+          color: rgba(255, 255, 255, 0.6);
         }
 
         @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(8px); }
+          0%, 100% { transform: translateY(0); opacity: 0.3; }
+          50% { transform: translateY(8px); opacity: 1; }
         }
 
         /* Floating particles */
@@ -357,8 +534,29 @@ export default function Hero() {
 
         /* Magnetic button */
         .magnetic-btn {
-          transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
           will-change: transform;
+        }
+
+        .hero-actions .btn {
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .hero-actions .btn:active {
+          transform: scale(0.96) !important;
+        }
+
+        .hero-actions .btn-primary {
+          background: linear-gradient(135deg, #d97706, #ea580c, #92400e);
+          background-size: 200% 200%;
+          animation: btnGradient 4s ease-in-out infinite;
+        }
+
+        @keyframes btnGradient {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
         }
 
         @media (max-width: 968px) {

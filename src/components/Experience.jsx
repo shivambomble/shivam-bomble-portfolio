@@ -1,9 +1,41 @@
+import { motion } from "framer-motion";
 import { experience } from "../data/portfolioData";
+import { cardVariants } from "../data/animationVariants";
+import AnimatedSection from "./AnimatedSection";
+
+const timelineContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      when: "beforeChildren",
+    },
+  },
+};
+
+const timelineItem = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const achievementVariant = {
+  hidden: { opacity: 0, x: -10 },
+  visible: (i) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: i * 0.06, duration: 0.3, ease: "easeOut" },
+  }),
+};
 
 export default function Experience() {
   return (
-    <section id="experience" className="section">
-      <div className="orb orb-1" style={{ width: "400px", height: "400px", background: "#ea580c", top: "60%", left: "-5%" }}></div>
+    <AnimatedSection id="experience" className="section">
+      <div className="orb orb-1" style={{ width: "400px", height: "400px", background: "#ea580c", top: "60%", left: "-5%" }} />
 
       <div className="section-container">
         <div className="side-decor side-decor-left">
@@ -34,76 +66,142 @@ export default function Experience() {
           <span className="highlight">Work Experience</span>
         </h2>
 
-        <div className="exp-timeline">
+        <motion.div
+          className="exp-timeline"
+          variants={timelineContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {experience.map((item, index) => (
-            <div key={index} className="exp-item animate-in" style={{ animationDelay: `${index * 0.2}s` }}>
+            <motion.div key={index} className="exp-item" variants={timelineItem}>
               <div className="exp-line">
-                <div className="exp-dot"></div>
-                {index < experience.length - 1 && <div className="exp-connector"></div>}
+                <motion.div
+                  className="exp-dot"
+                  animate={{ scale: [1, 1.3, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  whileHover={{ scale: 1.5 }}
+                />
+                {index < experience.length - 1 && (
+                  <motion.div
+                    className="exp-connector"
+                    initial={{ scaleY: 0 }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ transformOrigin: "top" }}
+                  />
+                )}
               </div>
 
-              <div className="exp-card glass-card">
+              <motion.div
+                className="exp-card glass-card"
+                variants={cardVariants}
+                whileHover={{ y: -6, scale: 1.012 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
                 <div className="exp-header">
                   <div className="exp-role-company">
                     <h3 className="exp-role">{item.role}</h3>
                     <h4 className="exp-company">{item.company}</h4>
                   </div>
-                  <span className="exp-period">{item.period}</span>
+                  <motion.span
+                    className="exp-period"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {item.period}
+                  </motion.span>
                 </div>
 
                 <p className="exp-description">{item.description}</p>
 
-                <ul className="exp-achievements">
+                <motion.ul
+                  className="exp-achievements"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                >
                   {item.achievements.map((ach, i) => (
-                    <li key={i}>{ach}</li>
+                    <motion.li
+                      key={i}
+                      custom={i}
+                      variants={achievementVariant}
+                      whileHover={{ x: 4, color: "rgba(255, 255, 255, 0.8)" }}
+                    >
+                      {ach}
+                    </motion.li>
                   ))}
-                </ul>
-              </div>
-            </div>
+                </motion.ul>
+              </motion.div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       <style>{`
         .exp-dot {
-          animation: dotPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes dotPulse {
-          0%, 100% { box-shadow: 0 0 20px rgba(217, 119, 6, 0.3); }
-          50% { box-shadow: 0 0 35px rgba(217, 119, 6, 0.6), 0 0 60px rgba(217, 119, 6, 0.15); }
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #d97706, #92400e);
+          border: 3px solid rgba(10, 10, 15, 1);
+          box-shadow: 0 0 20px rgba(217, 119, 6, 0.3);
+          z-index: 1;
+          flex-shrink: 0;
+          margin-top: 8px;
         }
 
         .exp-connector {
-          animation: connectorGrow 1s ease forwards;
-          transform-origin: top;
-          transform: scaleY(0);
+          width: 2px;
+          flex: 1;
+          background: linear-gradient(180deg, rgba(217, 119, 6, 0.4), rgba(146, 64, 14, 0.4));
+          min-height: 40px;
+          position: relative;
         }
 
-        .exp-item.animate-in .exp-connector {
-          animation: connectorGrow 0.8s ease forwards 0.3s;
+        .exp-connector::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 4px;
+          height: 100%;
+          background: linear-gradient(180deg, rgba(217, 119, 6, 0.4), rgba(146, 64, 14, 0.4));
+          border-radius: 2px;
+          filter: blur(2px);
+          opacity: 0;
+          transition: opacity 0.5s ease;
         }
 
-        @keyframes connectorGrow {
-          from { transform: scaleY(0); }
-          to { transform: scaleY(1); }
+        .exp-item:hover .exp-connector::after {
+          opacity: 1;
         }
 
         .exp-card {
-          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          position: relative;
+          isolation: isolate;
+          margin-bottom: 24px;
         }
 
-        .exp-card:hover {
-          transform: translateY(-6px) scale(1.012) !important;
+        .exp-card::after {
+          content: '';
+          position: absolute;
+          inset: -1px;
+          border-radius: 21px;
+          background: linear-gradient(135deg, transparent 30%, rgba(217, 119, 6, 0.08), transparent 70%);
+          z-index: -1;
+          opacity: 0;
+          transition: opacity 0.6s ease;
         }
 
-        .exp-achievements li {
-          transition: all 0.3s ease;
+        .exp-card:hover::after {
+          opacity: 1;
         }
 
-        .exp-achievements li:hover {
-          color: rgba(255, 255, 255, 0.8);
-          padding-left: 24px;
+        .exp-period {
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .exp-timeline {
@@ -125,29 +223,6 @@ export default function Experience() {
           display: flex;
           flex-direction: column;
           align-items: center;
-        }
-
-        .exp-dot {
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, #d97706, #92400e);
-          border: 3px solid rgba(10, 10, 15, 1);
-          box-shadow: 0 0 20px rgba(217, 119, 6, 0.3);
-          z-index: 1;
-          flex-shrink: 0;
-          margin-top: 8px;
-        }
-
-        .exp-connector {
-          width: 2px;
-          flex: 1;
-          background: linear-gradient(180deg, rgba(217, 119, 6, 0.4), rgba(146, 64, 14, 0.4));
-          min-height: 40px;
-        }
-
-        .exp-card {
-          margin-bottom: 24px;
         }
 
         .exp-header {
@@ -205,7 +280,7 @@ export default function Experience() {
         }
 
         .exp-achievements li::before {
-          content: "→";
+          content: "\\2192";
           position: absolute;
           left: 0;
           color: #92400e;
@@ -227,6 +302,6 @@ export default function Experience() {
           }
         }
       `}</style>
-    </section>
+    </AnimatedSection>
   );
 }

@@ -1,9 +1,23 @@
+import { motion } from "framer-motion";
 import { education } from "../data/portfolioData";
+import { cardVariants, itemVariants } from "../data/animationVariants";
+import AnimatedSection from "./AnimatedSection";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      when: "beforeChildren",
+    },
+  },
+};
 
 export default function Education() {
   return (
-    <section id="education" className="section">
-      <div className="orb orb-3" style={{ width: "350px", height: "350px", background: "#92400e" }}></div>
+    <AnimatedSection id="education" className="section">
+      <motion.div className="orb orb-3" style={{ width: "350px", height: "350px", background: "#92400e" }} />
 
       <div className="section-container">
         <div className="side-decor side-decor-left">
@@ -34,14 +48,27 @@ export default function Education() {
           <span className="highlight">Education</span>
         </h2>
 
-        <div className="education-timeline">
+        <motion.div
+          className="education-timeline"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {education.map((item, index) => (
-            <div
+            <motion.div
               key={index}
-              className="education-card glass-card animate-in"
-              style={{ animationDelay: `${index * 0.2}s` }}
+              className="education-card glass-card"
+              variants={cardVariants}
+              whileHover={{ y: -8, scale: 1.015, borderColor: "rgba(217, 119, 6, 0.2)" }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              <div className="edu-year">{item.year}</div>
+              <motion.div
+                className="edu-year"
+                whileHover={{ scale: 1.05 }}
+              >
+                {item.year}
+              </motion.div>
               <div className="edu-content">
                 <h3 className="edu-degree">{item.degree}</h3>
                 <h4 className="edu-institution">{item.institution}</h4>
@@ -51,54 +78,74 @@ export default function Education() {
                     {item.highlights.map((h, i) => {
                       const isPaper = item.paperUrl && h.includes("Published paper");
                       return (
-                        <li key={i}>
+                        <motion.li
+                          key={i}
+                          variants={itemVariants}
+                          whileHover={{ scale: 1.04, y: -1, backgroundColor: "rgba(217, 119, 6, 0.1)", borderColor: "rgba(217, 119, 6, 0.2)" }}
+                        >
                           {isPaper ? (
                             <a href={item.paperUrl} target="_blank" rel="noopener noreferrer" className="edu-paper-link">
                               {h}
-                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <motion.svg
+                                width="12" height="12" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                                whileHover={{ x: 2, y: -2 }}
+                              >
                                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                                 <polyline points="15 3 21 3 21 9"></polyline>
                                 <line x1="10" y1="14" x2="21" y2="3"></line>
-                              </svg>
+                              </motion.svg>
                             </a>
                           ) : (
                             h
                           )}
-                        </li>
+                        </motion.li>
                       );
                     })}
                   </ul>
                 )}
               </div>
-              <div className="edu-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d97706" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <motion.div className="edu-icon">
+                <motion.svg
+                  width="32" height="32" viewBox="0 0 24 24" fill="none"
+                  stroke="#d97706" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+                  whileHover={{ rotate: [0, -10, 0], scale: 1.2 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
                   <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                </svg>
-              </div>
-            </div>
+                </motion.svg>
+              </motion.div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       <style>{`
         .education-card {
-          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          position: relative;
+          isolation: isolate;
         }
 
-        .education-card:hover {
-          transform: translateY(-8px) scale(1.015) !important;
-          border-color: rgba(217, 119, 6, 0.2) !important;
-          box-shadow: 0 20px 60px rgba(217, 119, 6, 0.08), 0 0 40px rgba(217, 119, 6, 0.03) !important;
+        .education-card::after {
+          content: '';
+          position: absolute;
+          inset: -1px;
+          border-radius: 21px;
+          background: linear-gradient(135deg, transparent 30%, rgba(217, 119, 6, 0.1), rgba(234, 88, 12, 0.05), transparent 70%);
+          z-index: -1;
+          opacity: 0;
+          transition: opacity 0.6s ease;
         }
 
-        .education-card:hover .edu-icon svg {
-          animation: iconBounce 0.5s ease;
+        .education-card:hover::after {
+          opacity: 1;
         }
 
-        @keyframes iconBounce {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.2) rotate(-5deg); }
+        .edu-year {
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          cursor: default;
         }
 
         .education-timeline {
@@ -163,10 +210,11 @@ export default function Education() {
           padding: 4px 12px;
           border-radius: 6px;
           border: 1px solid rgba(255, 255, 255, 0.06);
+          cursor: default;
         }
 
         .edu-highlights li::before {
-          content: "▹ ";
+          content: "\\25B9 ";
           color: #d97706;
         }
 
@@ -176,12 +224,6 @@ export default function Education() {
           display: inline-flex;
           align-items: center;
           gap: 4px;
-          transition: all 0.3s ease;
-        }
-
-        .edu-paper-link:hover {
-          color: #d97706;
-          gap: 6px;
         }
 
         .edu-icon {
@@ -201,6 +243,6 @@ export default function Education() {
           }
         }
       `}</style>
-    </section>
+    </AnimatedSection>
   );
 }

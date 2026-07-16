@@ -1,7 +1,7 @@
 export const personalInfo = {
   name: "Shivam Bomble",
-  tagline: "AI & Machine Learning Enthusiast | Full-Stack Developer",
-  bio: "Passionate about leveraging artificial intelligence and machine learning to solve real-world problems. Currently pursuing my Master's in AI & ML while building innovative projects that make a difference.",
+  tagline: "Master's in AI & ML | Full-Stack Developer",
+  bio: "As a self-motivated and tech-savvy individual, I have always been passionate about computer software and coding languages. My keen interest in statistics and mathematics has allowed me to excel in data science, particularly artificial intelligence and machine learning.",
   location: "Bangalore, India",
   email: "shivamvbomble@gmail.com",
   social: {
@@ -94,12 +94,3 @@ export const skills = {
   "Data Engineering": ["Pandas", "NumPy", "ETL Pipelines", "Label Studio"],
   "Data Visualization": ["Power BI", "Tableau", "Matplotlib", "Plotly", "Geospatial Mapping"],
 };
-
-export const skillCategories = [
-  "Languages",
-  "Frameworks & Tools",
-  "AI & Machine Learning",
-  "Cloud & DevOps",
-  "Data Engineering",
-  "Data Visualization",
-];
