@@ -17,7 +17,7 @@ const containerVariants = {
 export default function Education() {
   return (
     <AnimatedSection id="education" className="section">
-      <motion.div className="orb orb-3" style={{ width: "350px", height: "350px", background: "#92400e" }} />
+      <motion.div className="orb orb-3" style={{ width: "350px", height: "350px", background: "#047857" }} />
 
       <div className="section-container">
         <div className="side-decor side-decor-left">
@@ -60,7 +60,7 @@ export default function Education() {
               key={index}
               className="education-card glass-card"
               variants={cardVariants}
-              whileHover={{ y: -8, scale: 1.015, borderColor: "rgba(217, 119, 6, 0.2)" }}
+              whileHover={{ y: -8, scale: 1.015, borderColor: "rgba(16, 185, 129, 0.2)" }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <motion.div
@@ -81,7 +81,7 @@ export default function Education() {
                         <motion.li
                           key={i}
                           variants={itemVariants}
-                          whileHover={{ scale: 1.04, y: -1, backgroundColor: "rgba(217, 119, 6, 0.1)", borderColor: "rgba(217, 119, 6, 0.2)" }}
+                          whileHover={{ scale: 1.04, y: -1, backgroundColor: "rgba(16, 185, 129, 0.1)", borderColor: "rgba(16, 185, 129, 0.2)" }}
                         >
                           {isPaper ? (
                             <a href={item.paperUrl} target="_blank" rel="noopener noreferrer" className="edu-paper-link">
@@ -108,7 +108,7 @@ export default function Education() {
               <motion.div className="edu-icon">
                 <motion.svg
                   width="32" height="32" viewBox="0 0 24 24" fill="none"
-                  stroke="#d97706" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+                  stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
                   whileHover={{ rotate: [0, -10, 0], scale: 1.2 }}
                   transition={{ duration: 0.5 }}
                 >
@@ -133,7 +133,7 @@ export default function Education() {
           position: absolute;
           inset: -1px;
           border-radius: 21px;
-          background: linear-gradient(135deg, transparent 30%, rgba(217, 119, 6, 0.1), rgba(234, 88, 12, 0.05), transparent 70%);
+          background: linear-gradient(135deg, transparent 30%, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05), transparent 70%);
           z-index: -1;
           opacity: 0;
           transition: opacity 0.6s ease;
@@ -167,12 +167,12 @@ export default function Education() {
         .edu-year {
           font-size: 0.9rem;
           font-weight: 700;
-          color: #ea580c;
-          background: rgba(234, 88, 12, 0.1);
+          color: #059669;
+          background: rgba(5, 150, 105, 0.1);
           padding: 6px 16px;
           border-radius: 8px;
           white-space: nowrap;
-          border: 1px solid rgba(234, 88, 12, 0.2);
+          border: 1px solid rgba(5, 150, 105, 0.2);
         }
 
         .edu-degree {
@@ -215,7 +215,7 @@ export default function Education() {
 
         .edu-highlights li::before {
           content: "\\25B9 ";
-          color: #d97706;
+          color: #10b981;
         }
 
         .edu-paper-link {

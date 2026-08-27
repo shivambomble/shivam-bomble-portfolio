@@ -117,7 +117,7 @@ export default function Footer() {
           left: 0;
           right: 0;
           height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(217, 119, 6, 0.2), rgba(234, 88, 12, 0.2), transparent);
+          background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2), transparent);
           background-size: 200% 100%;
           animation: shimmerSlide 3s ease-in-out infinite;
         }
@@ -160,7 +160,7 @@ export default function Footer() {
           left: 50%;
           width: 0;
           height: 1px;
-          background: linear-gradient(90deg, #d97706, #ea580c);
+          background: linear-gradient(90deg, #10b981, #059669);
           transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
           transform: translateX(-50%);
         }

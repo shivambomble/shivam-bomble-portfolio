@@ -35,7 +35,7 @@ const achievementVariant = {
 export default function Experience() {
   return (
     <AnimatedSection id="experience" className="section">
-      <div className="orb orb-1" style={{ width: "400px", height: "400px", background: "#ea580c", top: "60%", left: "-5%" }} />
+      <div className="orb orb-1" style={{ width: "400px", height: "400px", background: "#059669", top: "60%", left: "-5%" }} />
 
       <div className="section-container">
         <div className="side-decor side-decor-left">
@@ -143,9 +143,9 @@ export default function Experience() {
           width: 16px;
           height: 16px;
           border-radius: 50%;
-          background: linear-gradient(135deg, #d97706, #92400e);
+          background: linear-gradient(135deg, #10b981, #047857);
           border: 3px solid rgba(10, 10, 15, 1);
-          box-shadow: 0 0 20px rgba(217, 119, 6, 0.3);
+          box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
           z-index: 1;
           flex-shrink: 0;
           margin-top: 8px;
@@ -154,7 +154,7 @@ export default function Experience() {
         .exp-connector {
           width: 2px;
           flex: 1;
-          background: linear-gradient(180deg, rgba(217, 119, 6, 0.4), rgba(146, 64, 14, 0.4));
+          background: linear-gradient(180deg, rgba(16, 185, 129, 0.4), rgba(4, 120, 87, 0.4));
           min-height: 40px;
           position: relative;
         }
@@ -167,7 +167,7 @@ export default function Experience() {
           transform: translateX(-50%);
           width: 4px;
           height: 100%;
-          background: linear-gradient(180deg, rgba(217, 119, 6, 0.4), rgba(146, 64, 14, 0.4));
+          background: linear-gradient(180deg, rgba(16, 185, 129, 0.4), rgba(4, 120, 87, 0.4));
           border-radius: 2px;
           filter: blur(2px);
           opacity: 0;
@@ -190,7 +190,7 @@ export default function Experience() {
           position: absolute;
           inset: -1px;
           border-radius: 21px;
-          background: linear-gradient(135deg, transparent 30%, rgba(217, 119, 6, 0.08), transparent 70%);
+          background: linear-gradient(135deg, transparent 30%, rgba(16, 185, 129, 0.08), transparent 70%);
           z-index: -1;
           opacity: 0;
           transition: opacity 0.6s ease;
@@ -249,12 +249,12 @@ export default function Experience() {
 
         .exp-period {
           font-size: 0.85rem;
-          color: #ea580c;
-          background: rgba(234, 88, 12, 0.1);
+          color: #059669;
+          background: rgba(5, 150, 105, 0.1);
           padding: 4px 12px;
           border-radius: 8px;
           white-space: nowrap;
-          border: 1px solid rgba(234, 88, 12, 0.2);
+          border: 1px solid rgba(5, 150, 105, 0.2);
         }
 
         .exp-description {
@@ -283,7 +283,7 @@ export default function Experience() {
           content: "\\2192";
           position: absolute;
           left: 0;
-          color: #92400e;
+          color: #047857;
         }
 
         @media (max-width: 768px) {

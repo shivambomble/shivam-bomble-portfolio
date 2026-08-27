@@ -51,7 +51,7 @@ export default function SkillCloud({ skills }) {
         tags.push({
           name: skill,
           category,
-          color: categoryColors[category] || "#d97706",
+          color: categoryColors[category] || "#10b981",
         });
       });
     });
@@ -285,7 +285,7 @@ export default function SkillCloud({ skills }) {
           aspect-ratio: 1;
           border-radius: 50%;
           border: 1px solid rgba(255, 255, 255, 0.04);
-          background: radial-gradient(circle, rgba(217, 119, 6, 0.03) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
           pointer-events: none;
           animation: ringPulse 4s ease-in-out infinite;
         }
@@ -300,7 +300,7 @@ export default function SkillCloud({ skills }) {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: rgba(217, 119, 6, 0.2);
+          background: rgba(16, 185, 129, 0.2);
           pointer-events: none;
         }
 
@@ -321,8 +321,8 @@ export default function SkillCloud({ skills }) {
           font-size: 0.85rem;
           font-weight: 500;
           white-space: nowrap;
-          border: 1px solid var(--tag-color, #d97706);
-          color: var(--tag-color, #d97706);
+          border: 1px solid var(--tag-color, #10b981);
+          color: var(--tag-color, #10b981);
           background: rgba(255, 255, 255, 0.03);
           cursor: pointer;
           will-change: transform, opacity;

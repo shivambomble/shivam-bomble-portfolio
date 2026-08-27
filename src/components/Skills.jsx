@@ -15,7 +15,7 @@ const fadeUp = {
 export default function Skills() {
   return (
     <AnimatedSection id="skills" className="section">
-      <div className="orb orb-2" style={{ width: "350px", height: "350px", background: "#d97706", top: "30%", right: "-5%" }} />
+      <div className="orb orb-2" style={{ width: "350px", height: "350px", background: "#10b981", top: "30%", right: "-5%" }} />
 
       <div className="section-container">
         <motion.div
