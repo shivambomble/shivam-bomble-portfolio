@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Terminal from "./components/Terminal";
 import LoadingScreen from "./components/LoadingScreen";
 import KonamiCode from "./components/KonamiCode";
+import BackgroundObjects from "./components/BackgroundObjects";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -25,6 +26,7 @@ function App() {
       {loading && <LoadingScreen onComplete={handleLoadComplete} />}
       <div ref={progressRef} className="scroll-progress" />
       <div className="grid-overlay" />
+      <BackgroundObjects />
       <KonamiCode />
       <Terminal />
     </div>

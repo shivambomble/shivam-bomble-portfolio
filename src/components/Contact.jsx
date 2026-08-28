@@ -114,7 +114,7 @@ export default function Contact() {
           padding: 10px 14px;
           border-radius: 6px;
           border: 1px solid rgba(255, 255, 255, 0.06);
-          background: rgba(255, 255, 255, 0.03);
+          background: rgba(10, 15, 12, 0.85);
           color: #f0fdf4;
           font-size: 0.85rem;
           font-family: "Inter", sans-serif;

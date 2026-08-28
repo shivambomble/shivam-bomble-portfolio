@@ -107,7 +107,7 @@ export default function LinkedInPosts() {
           flex-direction: column;
           gap: 12px;
           padding: 24px;
-          background: rgba(255, 255, 255, 0.02);
+          background: rgba(10, 15, 12, 0.85);
           border: 1px solid rgba(255, 255, 255, 0.05);
           border-radius: 10px;
           text-decoration: none;
@@ -164,7 +164,7 @@ export default function LinkedInPosts() {
         .li-tag {
           padding: 3px 8px;
           border-radius: 4px;
-          background: rgba(255, 255, 255, 0.03);
+          background: rgba(10, 15, 12, 0.85);
           border: 1px solid rgba(255, 255, 255, 0.05);
           font-size: 0.7rem;
           color: rgba(255, 255, 255, 0.3);

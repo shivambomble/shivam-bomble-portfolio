@@ -333,6 +333,7 @@ export default function Terminal() {
           align-items: center;
           justify-content: center;
           padding: 80px 48px 48px;
+          background: rgba(8, 12, 10, 0.6);
         }
 
         .tp-terminal-wrap {
@@ -348,7 +349,7 @@ export default function Terminal() {
           width: 100%;
           border-radius: 10px;
           border: 1px solid rgba(255, 255, 255, 0.06);
-          background: rgba(0, 0, 0, 0.4);
+          background: rgba(10, 15, 12, 0.97);
           overflow: hidden;
         }
 
@@ -357,7 +358,7 @@ export default function Terminal() {
           align-items: center;
           gap: 6px;
           padding: 10px 14px;
-          background: rgba(255, 255, 255, 0.02);
+          background: rgba(10, 15, 12, 0.98);
           border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
@@ -438,7 +439,7 @@ export default function Terminal() {
           padding: 7px 16px;
           border-radius: 6px;
           border: 1px solid rgba(255, 255, 255, 0.05);
-          background: rgba(255, 255, 255, 0.02);
+          background: rgba(10, 15, 12, 0.8);
           color: rgba(255, 255, 255, 0.35);
           font-size: 0.76rem;
           font-family: "JetBrains Mono", monospace;
@@ -457,9 +458,10 @@ export default function Terminal() {
           max-width: 1000px;
           margin: 0 auto;
           padding: 0 32px;
+          position: relative;
         }
 
-        .tp-section { padding: 56px 0; }
+        .tp-section { padding: 56px 0; position: relative; }
 
         .tp-sec-inner { width: 100%; }
 

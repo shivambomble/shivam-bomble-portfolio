@@ -197,7 +197,7 @@ export default function GitHubHeatmap({ isDark = true }) {
 
       <style>{`
         .heatmap-container {
-          background: rgba(255, 255, 255, 0.03);
+          background: rgba(10, 15, 12, 0.85);
           border: 1px solid rgba(255, 255, 255, 0.06);
           border-radius: 16px;
           padding: 28px;

@@ -5,25 +5,25 @@ const testimonials = [
   {
     name: "Dr. Deepa Karandikar",
     role: "Director Training and Placements, SSPU",
-    text: "Shivam stands out for his excellent communication skills and natural leadership ability. He approaches complex problems with a structured mindset and consistently delivers solutions that go beyond expectations.",
+    text: "Honestly, Shivam surprised me. During placement prep sessions, most students just tick boxes. He actually sat down, figured out what was broken in the process, and restructured the whole thing. Kids who worked with him ended up way more confident. That's not something you teach — he just has it.",
     rating: 5,
   },
   {
     name: "Devansh Timbadia",
     role: "Product Lead, OORJAA Tech",
-    text: "His ML pipeline for sales analytics was delivered ahead of schedule. Shivam has a rare combination of data science depth and the ability to communicate insights to non-technical stakeholders.",
+    text: "We needed someone who could actually build the ML pipeline, not just talk about it. Shivam showed up, asked the right questions on day one, and had a working prototype before we expected. What impressed me more though was how he explained the results to our sales team — no jargon, just clarity. Rare combo.",
     rating: 5,
   },
   {
     name: "Saakshi Jaiswal",
     role: "Analyst, Neostats",
-    text: "I've worked with Shivam on multiple projects. His passion for AI is infectious, and he has a way of making complex concepts accessible. A true team player and problem solver.",
+    text: "I've lost count of how many late nights we spent debugging stuff together. What I like about working with Shivam is he doesn't just fix the bug and move on — he'll actually sit with you and walk through why it broke. Genuinely one of those people who makes the whole team better, not just himself.",
     rating: 5,
   },
   {
     name: "Nizar Banu P K",
     role: "Research Guide, CHRIST University",
-    text: "Shivam's work on Convolutional Neural Networks showed strong grasp of deep learning fundamentals. His CNN-based research paper was well-structured with solid experimental methodology and clear results.",
+    text: "Guiding students through research, you see a lot of half-baked efforts. Shivam was different. He came in with a clear idea on CNNs, did the groundwork properly, and didn't cut corners when the experiments got tedious. The paper he put together was solid — the kind of work I'd be comfortable putting my name next to.",
     rating: 5,
   },
 ];
@@ -169,7 +169,7 @@ export default function Testimonials() {
           height: 40px;
           border-radius: 10px;
           border: 1px solid rgba(255, 255, 255, 0.08);
-          background: rgba(255, 255, 255, 0.03);
+          background: rgba(10, 15, 12, 0.85);
           color: rgba(255, 255, 255, 0.5);
           display: flex;
           align-items: center;
@@ -196,7 +196,7 @@ export default function Testimonials() {
         }
 
         .testimonial-card {
-          background: rgba(255, 255, 255, 0.03);
+          background: rgba(10, 15, 12, 0.85);
           border: 1px solid rgba(255, 255, 255, 0.06);
           border-radius: 16px;
           padding: 32px;

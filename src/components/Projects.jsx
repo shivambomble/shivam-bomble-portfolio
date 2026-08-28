@@ -113,7 +113,7 @@ export default function Projects() {
           flex-direction: column;
           gap: 12px;
           padding: 24px;
-          background: rgba(255, 255, 255, 0.02);
+          background: rgba(10, 15, 12, 0.85);
           border: 1px solid rgba(255, 255, 255, 0.05);
           border-radius: 10px;
           text-decoration: none;
@@ -195,7 +195,7 @@ export default function Projects() {
           padding: 10px 20px;
           border-radius: 6px;
           border: 1px solid rgba(255, 255, 255, 0.06);
-          background: rgba(255, 255, 255, 0.02);
+          background: rgba(10, 15, 12, 0.85);
           color: rgba(255, 255, 255, 0.4);
           text-decoration: none;
           font-size: 0.82rem;
