@@ -24,7 +24,7 @@ function createShapes(count) {
 }
 
 export default function BackgroundObjects() {
-  const shapes = useMemo(() => createShapes(35), []);
+  const shapes = useMemo(() => createShapes(28), []);
 
   return (
     <div className="bg-objects" aria-hidden="true">
