@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 
 function createShapes(count) {
   const shapes = [];
@@ -18,6 +18,7 @@ function createShapes(count) {
       rotation: Math.random() * 360,
       rotSpeed: Math.random() * 60 + 40,
       opacity: Math.random() * 0.25 + 0.15,
+      parallax: 0.02 + Math.random() * 0.06,
     });
   }
   return shapes;
@@ -25,6 +26,22 @@ function createShapes(count) {
 
 export default function BackgroundObjects() {
   const shapes = useMemo(() => createShapes(28), []);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <div className="bg-objects" aria-hidden="true">
@@ -36,8 +53,9 @@ export default function BackgroundObjects() {
             left: `${s.left}%`,
             top: `${s.top}%`,
             width: s.type === "line" ? `${s.size * 1.5}px` : `${s.size}px`,
-            height: s.type === "line" ? "2px" : `${s.size}px`,
+            height: s.type === "line" ? "2.5px" : `${s.size}px`,
             opacity: s.opacity,
+            transform: `translateY(${-scrollY * s.parallax}px)`,
             animationDuration: `${s.duration}s, ${s.rotSpeed}s`,
             animationDelay: `${s.delay}s, ${s.delay * 0.7}s`,
             "--x-drift": `${s.xDrift}px`,
@@ -63,6 +81,7 @@ export default function BackgroundObjects() {
           position: absolute;
           border-color: rgba(16, 185, 129, 0.5);
           border-style: solid;
+          will-change: transform;
           animation:
             bgFloat var(--dur, 30s) ease-in-out infinite,
             bgSpin var(--rot-dur, 50s) linear infinite;

@@ -32,6 +32,18 @@ export default function Contact() {
 
   return (
     <div className="ct">
+      {submitted && (
+        <div className="ct-toast ct-toast-success">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5"/></svg>
+          Message sent successfully!
+        </div>
+      )}
+      {error && !submitted && (
+        <div className="ct-toast ct-toast-error">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Failed to send. Try again.
+        </div>
+      )}
       <form className="ct-form" onSubmit={handleSubmit}>
         <input type="hidden" name="_subject" value="New message from portfolio" />
         <input type="text" name="_gotcha" style={{ display: "none" }} />
@@ -137,6 +149,29 @@ export default function Contact() {
 
         .ct-error {
           font-size: 0.78rem;
+          color: #f87171;
+        }
+
+        .ct-toast {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 14px;
+          border-radius: 8px;
+          font-size: 0.82rem;
+          font-weight: 500;
+          margin-bottom: 4px;
+        }
+
+        .ct-toast-success {
+          background: rgba(16, 185, 129, 0.1);
+          border: 1px solid rgba(16, 185, 129, 0.2);
+          color: #10b981;
+        }
+
+        .ct-toast-error {
+          background: rgba(239, 68, 68, 0.1);
+          border: 1px solid rgba(239, 68, 68, 0.2);
           color: #f87171;
         }
 

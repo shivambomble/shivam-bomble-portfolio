@@ -4,6 +4,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import KonamiCode from "./components/KonamiCode";
 import BackgroundObjects from "./components/BackgroundObjects";
 import BackToTop from "./components/BackToTop";
+import CustomCursor from "./components/CustomCursor";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,7 @@ function App() {
       <div ref={progressRef} className="scroll-progress" />
       <div className="grid-overlay" />
       <BackgroundObjects />
+      <CustomCursor />
       <KonamiCode />
       <BackToTop />
       <Terminal />

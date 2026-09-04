@@ -13,6 +13,8 @@ import Testimonials from "./Testimonials";
 import DinoGame from "./DinoGame";
 import Contact from "./Contact";
 import ScrollReveal from "./ScrollReveal";
+import LazySection from "./LazySection";
+import CommandPalette from "./CommandPalette";
 
 // ── Commands ───────────────────────────────────────────────────────────
 const COMMANDS = {
@@ -25,7 +27,10 @@ const COMMANDS = {
       { t: "out", v: "  experience  Work history & achievements" },
       { t: "out", v: "  skills      Technologies I work with" },
       { t: "out", v: "  contact     How to reach me" },
+      { t: "out", v: "  resume      Download my resume" },
       { t: "out", v: "  clear       Clear the terminal" },
+      { t: "out", v: "" },
+      { t: "dim", v: "  Tip: Press ? for command palette" },
     ],
   },
   about: {
@@ -87,6 +92,46 @@ const COMMANDS = {
       { t: "out", v: `    LinkedIn ${personalInfo.social.linkedin}` },
     ],
   },
+  resume: {
+    output: [
+      { t: "exec", v: "$ curl -LO resume.pdf" },
+      { t: "out", v: "" },
+      { t: "hl", v: "  Downloading resume..." },
+      { t: "dim", v: "  Opening in new tab" },
+    ],
+    action: () => window.open("https://drive.google.com/file/d/17Dt9oxt2LndXItZI9btADvh7PaGC_Avt/view?usp=sharing", "_blank"),
+  },
+  "sudo hire me": {
+    output: [
+      { t: "exec", v: "$ sudo hire shivam" },
+      { t: "out", v: "" },
+      { t: "hl", v: "  Permission granted!" },
+      { t: "out", v: "" },
+      { t: "out", v: "  Great choice. Let's build something amazing together." },
+      { t: "out", v: "  Check the contact section below or email me directly." },
+    ],
+  },
+  matrix: {
+    output: [
+      { t: "exec", v: "$ matrix --init" },
+      { t: "out", v: "" },
+      { t: "hl", v: "  Wake up, Neo..." },
+      { t: "out", v: "" },
+      { t: "dim", v: "  The Matrix has you..." },
+      { t: "dim", v: "  Follow the green terminal prompt." },
+      { t: "out", v: "" },
+      { t: "out", v: "  red pill or blue pill?" },
+      { t: "dim", v: "  (hint: there is no blue pill here)" },
+    ],
+  },
+  hack: {
+    output: [
+      { t: "exec", v: "$ hack --target world" },
+      { t: "out", v: "" },
+      { t: "err", v: "  Access denied. Nice try though." },
+      { t: "dim", v: "  I'm a developer, not a hacker. Mostly." },
+    ],
+  },
   clear: { clear: true },
   ls: {
     output: [
@@ -126,6 +171,7 @@ export default function Terminal() {
     if (def) {
       if (def.clear) { setLines([]); return; }
       if (def.output) setLines((p) => [...p, ...def.output]);
+      if (def.action) setTimeout(def.action, 300);
     } else {
       setLines((p) => [
         ...p,
@@ -136,6 +182,7 @@ export default function Terminal() {
   }, []);
 
   const handleKey = useCallback((e) => {
+    if (e.key === "?") { e.preventDefault(); return; }
     if (e.key === "Enter") { e.preventDefault(); run(input); }
     else if (e.key === "ArrowUp") {
       e.preventDefault();
@@ -164,6 +211,7 @@ export default function Terminal() {
 
   return (
     <div className="tp">
+      <CommandPalette onRun={run} />
       {/* ═══ FULL-WIDTH HEADER ═══ */}
       <header className="tp-header">
         <div className="tp-header-left">
@@ -175,6 +223,14 @@ export default function Terminal() {
           </a>
           <a href={personalInfo.social.linkedin} target="_blank" rel="noopener noreferrer" className="tp-header-link">
             LinkedIn
+          </a>
+          <a
+            href="https://drive.google.com/file/d/17Dt9oxt2LndXItZI9btADvh7PaGC_Avt/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="tp-header-link tp-header-resume"
+          >
+            Resume
           </a>
           <a href={`mailto:${personalInfo.email}`} className="tp-header-link">
             Contact
@@ -224,11 +280,9 @@ export default function Terminal() {
                 aria-label="Terminal input"
               />
             </div>
-          </div>
-
-          {/* Quick actions */}
+          </div>            {/* Quick actions */}
           <div className="tp-actions">
-            {["about", "skills", "experience", "contact"].map((c) => (
+            {["about", "skills", "experience", "resume", "contact"].map((c) => (
               <button key={c} className="tp-action" onClick={() => run(c)}>
                 {c}
               </button>
@@ -269,7 +323,7 @@ export default function Terminal() {
           <ScrollReveal delay={0.05}>
             <div className="tp-sec-inner">
               <h2 className="tp-sec-title"><span className="highlight">Recommendations</span></h2>
-              <Testimonials />
+              <LazySection><Testimonials /></LazySection>
             </div>
           </ScrollReveal>
         </section>
@@ -278,7 +332,7 @@ export default function Terminal() {
           <ScrollReveal delay={0.05}>
             <div className="tp-split">
               <div className="tp-split-left">
-                <DinoGame />
+                <LazySection><DinoGame /></LazySection>
               </div>
               <div className="tp-split-right">
                 <h2 className="tp-sec-title"><span className="highlight">Get in Touch</span></h2>

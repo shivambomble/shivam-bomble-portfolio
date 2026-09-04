@@ -73,8 +73,27 @@ export default function KonamiCode() {
             >
               
             </motion.div>
-            <h2 className="konami-title">KONAMI CODE ACTIVATED!</h2>
-            <p className="konami-text">You found the easter egg! You're clearly a person of culture.</p>
+            <h2 className="konami-title">SECRET UNLOCKED</h2>
+            <p className="konami-text">You found the easter egg. Here are some things you probably didn't know:</p>
+            <div className="konami-facts">
+              {[
+                "I debug best at 2 AM with chai and lo-fi beats",
+                "My first program was a calculator that only subtracted",
+                "I've mass-deleted node_modules more times than I've committed today",
+                "The Dino game above? I've lost 47 times while testing it",
+                "This entire portfolio was built in one sitting (don't tell my manager)",
+              ].map((fact, i) => (
+                <motion.div
+                  key={i}
+                  className="konami-fact"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 + i * 0.1 }}
+                >\n                  <span className="konami-fact-num">{i + 1}.</span>
+                  <span>{fact}</span>
+                </motion.div>
+              ))}
+            </div>
             <div className="konami-buttons">
               {["↑", "↑", "↓", "↓", "←", "→", "←", "→", "B", "A"].map((btn, i) => (
                 <motion.span
@@ -158,6 +177,31 @@ export default function KonamiCode() {
               color: rgba(255, 255, 255, 0.6);
               font-size: 0.95rem;
               margin-bottom: 20px;
+            }
+
+            .konami-facts {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              margin-bottom: 20px;
+              text-align: left;
+              max-width: 480px;
+              margin-left: auto;
+              margin-right: auto;
+            }
+
+            .konami-fact {
+              display: flex;
+              gap: 8px;
+              font-size: 0.82rem;
+              color: rgba(255, 255, 255, 0.5);
+              line-height: 1.5;
+            }
+
+            .konami-fact-num {
+              color: #10b981;
+              font-weight: 600;
+              flex-shrink: 0;
             }
 
             .konami-buttons {
