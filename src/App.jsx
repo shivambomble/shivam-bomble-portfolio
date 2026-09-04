@@ -3,6 +3,7 @@ import Terminal from "./components/Terminal";
 import LoadingScreen from "./components/LoadingScreen";
 import KonamiCode from "./components/KonamiCode";
 import BackgroundObjects from "./components/BackgroundObjects";
+import BackToTop from "./components/BackToTop";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,7 @@ function App() {
       <div className="grid-overlay" />
       <BackgroundObjects />
       <KonamiCode />
+      <BackToTop />
       <Terminal />
     </div>
   );

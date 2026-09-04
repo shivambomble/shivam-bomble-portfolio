@@ -192,7 +192,10 @@ export default function GitHubHeatmap({ isDark = true }) {
       </div>
 
       {error && (
-        <p className="heatmap-error">* {error}</p>
+        <div className="heatmap-error-banner">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>Could not load live data. Showing sample activity.</span>
+        </div>
       )}
 
       <style>{`
@@ -318,11 +321,18 @@ export default function GitHubHeatmap({ isDark = true }) {
           border-radius: 2px;
         }
 
-        .heatmap-error {
+        .heatmap-error-banner {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          justify-content: center;
+          margin-top: 12px;
+          padding: 8px 14px;
+          border-radius: 6px;
+          background: rgba(234, 179, 8, 0.06);
+          border: 1px solid rgba(234, 179, 8, 0.12);
+          color: rgba(234, 179, 8, 0.7);
           font-size: 0.75rem;
-          color: rgba(255, 255, 255, 0.3);
-          margin-top: 8px;
-          text-align: center;
         }
 
         .heatmap-loading {

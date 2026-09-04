@@ -118,7 +118,13 @@ export default function Projects() {
           border-radius: 10px;
           text-decoration: none;
           color: inherit;
-          transition: all 0.3s ease;
+          transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .pj-card:hover {
+          transform: translateY(-6px);
+          border-color: rgba(16, 185, 129, 0.2);
+          box-shadow: 0 12px 40px rgba(16, 185, 129, 0.08), 0 0 0 1px rgba(16, 185, 129, 0.06);
         }
 
         .pj-card-top {

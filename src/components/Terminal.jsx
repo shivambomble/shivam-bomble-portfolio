@@ -12,6 +12,7 @@ import LinkedInPosts from "./LinkedInPosts";
 import Testimonials from "./Testimonials";
 import DinoGame from "./DinoGame";
 import Contact from "./Contact";
+import ScrollReveal from "./ScrollReveal";
 
 // ── Commands ───────────────────────────────────────────────────────────
 const COMMANDS = {
@@ -239,42 +240,52 @@ export default function Terminal() {
       {/* ═══ SECTIONS ═══ */}
       <div className="tp-sections">
         <section className="tp-section" id="projects">
-          <div className="tp-sec-inner">
-            <h2 className="tp-sec-title"><span className="highlight">Projects</span></h2>
-            <Projects />
-          </div>
+          <ScrollReveal>
+            <div className="tp-sec-inner">
+              <h2 className="tp-sec-title"><span className="highlight">Projects</span></h2>
+              <Projects />
+            </div>
+          </ScrollReveal>
         </section>
 
         <section className="tp-section" id="github">
-          <div className="tp-sec-inner">
-            <h2 className="tp-sec-title"><span className="highlight">GitHub Activity</span></h2>
-            <GitHubHeatmap />
-          </div>
+          <ScrollReveal delay={0.05}>
+            <div className="tp-sec-inner">
+              <h2 className="tp-sec-title"><span className="highlight">GitHub Activity</span></h2>
+              <GitHubHeatmap />
+            </div>
+          </ScrollReveal>
         </section>
 
         <section className="tp-section" id="linkedin">
-          <div className="tp-sec-inner">
-            <LinkedInPosts />
-          </div>
+          <ScrollReveal delay={0.1}>
+            <div className="tp-sec-inner">
+              <LinkedInPosts />
+            </div>
+          </ScrollReveal>
         </section>
 
         <section className="tp-section" id="reviews">
-          <div className="tp-sec-inner">
-            <h2 className="tp-sec-title"><span className="highlight">Recommendations</span></h2>
-            <Testimonials />
-          </div>
+          <ScrollReveal delay={0.05}>
+            <div className="tp-sec-inner">
+              <h2 className="tp-sec-title"><span className="highlight">Recommendations</span></h2>
+              <Testimonials />
+            </div>
+          </ScrollReveal>
         </section>
 
         <section className="tp-section" id="contact-game">
-          <div className="tp-split">
-            <div className="tp-split-left">
-              <DinoGame />
+          <ScrollReveal delay={0.05}>
+            <div className="tp-split">
+              <div className="tp-split-left">
+                <DinoGame />
+              </div>
+              <div className="tp-split-right">
+                <h2 className="tp-sec-title"><span className="highlight">Get in Touch</span></h2>
+                <Contact />
+              </div>
             </div>
-            <div className="tp-split-right">
-              <h2 className="tp-sec-title"><span className="highlight">Get in Touch</span></h2>
-              <Contact />
-            </div>
-          </div>
+          </ScrollReveal>
         </section>
       </div>
 
