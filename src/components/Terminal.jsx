@@ -30,7 +30,7 @@ const COMMANDS = {
       { t: "out", v: "  resume      Download my resume" },
       { t: "out", v: "  clear       Clear the terminal" },
       { t: "out", v: "" },
-      { t: "dim", v: "  Tip: Press ? for command palette" },
+      { t: "dim", v: "  Tip: Press Ctrl/\u2318+K for command palette" },
     ],
   },
   about: {
@@ -182,7 +182,6 @@ export default function Terminal() {
   }, []);
 
   const handleKey = useCallback((e) => {
-    if (e.key === "?") { e.preventDefault(); return; }
     if (e.key === "Enter") { e.preventDefault(); run(input); }
     else if (e.key === "ArrowUp") {
       e.preventDefault();

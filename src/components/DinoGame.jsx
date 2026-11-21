@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
+import isEditable from "../utils/isEditable";
 
 const W = 600;
 const H = 300;
@@ -10,6 +11,8 @@ const BASE_SPEED = 4;
 
 export default function DinoGame() {
   const canvasRef = useRef(null);
+  const canvasWrapRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
   const [gameState, setGameState] = useState("idle");
   const [score, setScore] = useState(0);
   const [hiScore, setHiScore] = useState(() => {
@@ -271,9 +274,29 @@ export default function DinoGame() {
     }
   }, [gameState, score, hiScore]);
 
+  // Only capture keys while the canvas itself is on screen
+  useEffect(() => {
+    const el = canvasWrapRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.25 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const startGame = useCallback(() => {
+    initGame();
+    setScore(0);
+    setGameState("playing");
+  }, [initGame]);
+
   // Controls
   useEffect(() => {
     const handleKey = (e) => {
+      // Never swallow keys meant for the terminal, contact form or palette
+      if (!isVisible || isEditable(e.target)) return;
       if (gameState === "over" && (e.key === " " || e.key === "Enter")) {
         e.preventDefault();
         startGame();
@@ -307,13 +330,7 @@ export default function DinoGame() {
       window.removeEventListener("keydown", handleKey);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [gameState]);
-
-  const startGame = () => {
-    initGame();
-    setScore(0);
-    setGameState("playing");
-  };
+  }, [gameState, isVisible, startGame]);
 
   return (
     <div className="dg-section">
@@ -329,7 +346,7 @@ export default function DinoGame() {
           <span className="dg-hud-item dg-current">{String(score).padStart(5, "0")}</span>
         </div>
 
-        <div className="dg-canvas-wrap">
+        <div className="dg-canvas-wrap" ref={canvasWrapRef}>
           <canvas ref={canvasRef} width={W} height={H} className="dg-canvas" />
 
           {gameState === "idle" && (

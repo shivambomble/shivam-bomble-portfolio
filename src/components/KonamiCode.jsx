@@ -63,16 +63,6 @@ export default function KonamiCode() {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="konami-content">
-            <motion.div
-              className="konami-emoji"
-              animate={{
-                rotate: [0, -10, 10, -10, 10, 0],
-                scale: [1, 1.2, 1, 1.2, 1],
-              }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-            >
-              
-            </motion.div>
             <h2 className="konami-title">SECRET UNLOCKED</h2>
             <p className="konami-text">You found the easter egg. Here are some things you probably didn't know:</p>
             <div className="konami-facts">
@@ -89,7 +79,8 @@ export default function KonamiCode() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 + i * 0.1 }}
-                >\n                  <span className="konami-fact-num">{i + 1}.</span>
+                >
+                  <span className="konami-fact-num">{i + 1}.</span>
                   <span>{fact}</span>
                 </motion.div>
               ))}
@@ -155,12 +146,6 @@ export default function KonamiCode() {
             .konami-content {
               text-align: center;
               z-index: 1;
-            }
-
-            .konami-emoji {
-              font-size: 4rem;
-              margin-bottom: 16px;
-              display: block;
             }
 
             .konami-title {

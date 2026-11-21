@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import isEditable from "../utils/isEditable";
 
 const COMMANDS = [
   { name: "about", desc: "Who am I?" },
@@ -22,7 +23,22 @@ export default function CommandPalette({ onRun }) {
 
   const handleKey = useCallback(
     (e) => {
+      // Ignore auto-repeat so holding the shortcut doesn't toggle repeatedly.
+      if (e.repeat) return;
+
+      // ⌘K / Ctrl+K works everywhere, including while typing.
+      if ((e.metaKey || e.ctrlKey) && !e.altKey && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setOpen((prev) => {
+          if (!prev) setQuery("");
+          return !prev;
+        });
+        return;
+      }
+
       if (e.key === "?" && !open) {
+        // Never steal "?" from a text field.
+        if (e.metaKey || e.ctrlKey || e.altKey || isEditable(e.target)) return;
         e.preventDefault();
         e.stopPropagation();
         setOpen(true);
