@@ -6,11 +6,27 @@ import BackgroundObjects from "./components/BackgroundObjects";
 import BackToTop from "./components/BackToTop";
 import CustomCursor from "./components/CustomCursor";
 
+const LOADER_SEEN_KEY = "sb-loader-seen";
+
 function App() {
-  const [loading, setLoading] = useState(true);
+  // Returning visitors go straight to the site; the intro is a one-time flourish.
+  const [loading, setLoading] = useState(() => {
+    try {
+      return localStorage.getItem(LOADER_SEEN_KEY) !== "1";
+    } catch {
+      return true;
+    }
+  });
   const progressRef = useRef(null);
 
-  const handleLoadComplete = useCallback(() => setLoading(false), []);
+  const handleLoadComplete = useCallback(() => {
+    try {
+      localStorage.setItem(LOADER_SEEN_KEY, "1");
+    } catch {
+      // Storage can be blocked; the loader just runs every visit in that case.
+    }
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

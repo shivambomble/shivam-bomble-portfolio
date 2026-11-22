@@ -1,23 +1,48 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Enough time for the intro to register, but short enough that a fast load
+// never feels like an artificial delay.
+const MIN_VISIBLE = 700;
+// Insurance: never hold the page hostage to a slow font or image.
+const MAX_WAIT = 4000;
+// Matches the exit animation below.
+const EXIT_MS = 420;
+
 export default function LoadingScreen({ onComplete }) {
-  const [phase, setPhase] = useState(0);
+  const [exiting, setExiting] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 600);
-    const t2 = setTimeout(() => setPhase(2), 2000);
-    const t3 = setTimeout(() => onComplete?.(), 2600);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    let cancelled = false;
+
+    // "Ready" means fonts are usable and the page's images/scripts have loaded.
+    const assetsReady = new Promise((resolve) => {
+      const done = () => resolve();
+      if (document.readyState === "complete") done();
+      else window.addEventListener("load", done, { once: true });
+      document.fonts?.ready.then(done);
+      setTimeout(done, MAX_WAIT);
+    });
+
+    assetsReady.then(() => { if (!cancelled) setReady(true); });
+
+    Promise.all([new Promise((r) => setTimeout(r, MIN_VISIBLE)), assetsReady]).then(() => {
+      if (cancelled) return;
+      setExiting(true);
+      setTimeout(() => { if (!cancelled) onComplete?.(); }, EXIT_MS);
+    });
+
+    return () => { cancelled = true; };
   }, [onComplete]);
 
   return (
     <AnimatePresence>
-      {phase < 2 && (
+      {!exiting && (
         <motion.div
           className="ls"
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: EXIT_MS / 1000, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="ls-content">
             <motion.h1
@@ -35,11 +60,16 @@ export default function LoadingScreen({ onComplete }) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
+              {/* Stops at 90% until the page is actually ready, so a slow
+                  load doesn't look finished while the overlay is still up. */}
               <motion.div
                 className="ls-bar-fill"
                 initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1.8, ease: "easeInOut" }}
+                animate={{ width: ready ? "100%" : "90%" }}
+                transition={{
+                  duration: ready ? 0.35 : MIN_VISIBLE / 1000,
+                  ease: "easeInOut",
+                }}
               />
             </motion.div>
           </div>

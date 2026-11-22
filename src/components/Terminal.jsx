@@ -143,6 +143,16 @@ const COMMANDS = {
   },
 };
 
+// ── Quick actions ──────────────────────────────────────────────────────
+const QUICK_COMMANDS = ["about", "education", "experience", "skills", "contact", "resume"];
+
+const SECTION_LINKS = [
+  { label: "projects", id: "projects" },
+  { label: "github", id: "github" },
+  { label: "recommendations", id: "reviews" },
+  { label: "get in touch", id: "contact-game" },
+];
+
 // ── Main Component ─────────────────────────────────────────────────────
 export default function Terminal() {
   const [lines, setLines] = useState([]);
@@ -156,7 +166,17 @@ export default function Terminal() {
     if (termRef.current) termRef.current.scrollTop = termRef.current.scrollHeight;
   }, [lines]);
 
+  // Autofocus is great with a hardware keyboard, but on touch it just pops the
+  // soft keyboard over the page before the visitor has read anything.
+  const [autoFocusInput] = useState(
+    () => typeof window === "undefined" || window.matchMedia("(pointer: fine)").matches
+  );
+
   const focus = useCallback(() => inputRef.current?.focus(), []);
+
+  const jump = useCallback((id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   const run = useCallback((cmd) => {
     const t = cmd.trim().toLowerCase();
@@ -273,17 +293,33 @@ export default function Terminal() {
                 onChange={(e) => { setInput(e.target.value); setHistoryIdx(-1); }}
                 onKeyDown={handleKey}
                 placeholder="type a command..."
-                autoFocus
+                autoFocus={autoFocusInput}
                 spellCheck={false}
                 autoComplete="off"
                 aria-label="Terminal input"
               />
             </div>
-          </div>            {/* Quick actions */}
+          </div>
+
+          {/* Quick actions — tappable on touch, scrollable when they overflow */}
           <div className="tp-actions">
-            {["about", "skills", "experience", "resume", "contact"].map((c) => (
-              <button key={c} className="tp-action" onClick={() => run(c)}>
+            {QUICK_COMMANDS.map((c) => (
+              <button key={c} type="button" className="tp-action" onClick={() => run(c)}>
                 {c}
+              </button>
+            ))}
+          </div>
+
+          <div className="tp-actions">
+            {SECTION_LINKS.map(({ label, id }) => (
+              <button
+                key={id}
+                type="button"
+                className="tp-action tp-action-jump"
+                onClick={() => jump(id)}
+                aria-label={`Jump to ${label}`}
+              >
+                <span aria-hidden="true">↓</span> {label}
               </button>
             ))}
           </div>
@@ -305,7 +341,9 @@ export default function Terminal() {
           <ScrollReveal delay={0.05}>
             <div className="tp-sec-inner">
               <h2 className="tp-sec-title"><span className="highlight">GitHub Activity</span></h2>
-              <GitHubHeatmap />
+              <LazySection>
+                <GitHubHeatmap />
+              </LazySection>
             </div>
           </ScrollReveal>
         </section>
@@ -392,7 +430,7 @@ export default function Terminal() {
 
         /* ═══ HERO ═══ */
         .tp-hero {
-          height: 100vh;
+          min-height: 100vh;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -497,7 +535,12 @@ export default function Terminal() {
         .tl-prompt { color: #10b981; font-weight: 600; user-select: none; }
 
         /* Actions */
-        .tp-actions { display: flex; gap: 8px; justify-content: center; }
+        .tp-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          justify-content: center;
+        }
 
         .tp-action {
           padding: 7px 16px;
@@ -517,6 +560,14 @@ export default function Terminal() {
           background: rgba(16, 185, 129, 0.05);
         }
 
+        .tp-action-jump {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          color: rgba(52, 211, 153, 0.55);
+          border-color: rgba(16, 185, 129, 0.12);
+        }
+
         /* ═══ SECTIONS ═══ */
         .tp-sections {
           max-width: 1000px;
@@ -525,7 +576,7 @@ export default function Terminal() {
           position: relative;
         }
 
-        .tp-section { padding: 56px 0; position: relative; }
+        .tp-section { padding: 56px 0; position: relative; scroll-margin-top: 84px; }
 
         .tp-sec-inner { width: 100%; }
 
@@ -591,6 +642,23 @@ export default function Terminal() {
           .tp-input-row { padding: 10px 14px; }
           .tp-sections { padding: 0 16px; }
           .tp-section { padding: 36px 0; }
+
+          /* Chips become a single swipeable row instead of stacking */
+          .tp-actions {
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            padding: 2px 2px 6px;
+          }
+          .tp-actions::-webkit-scrollbar { display: none; }
+          .tp-action {
+            flex: 0 0 auto;
+            padding: 10px 14px;
+            font-size: 0.78rem;
+            min-height: 40px;
+          }
           .tp-footer { flex-direction: column; align-items: center; gap: 4px; }
         }
       `}</style>
